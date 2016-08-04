@@ -1,6 +1,6 @@
 (ns translator.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn translation->clojure
+  "parses translation files"
+  [translation-type io-file]
+  {:foo :bar})
