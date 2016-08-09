@@ -10,5 +10,6 @@
   (eval '(eftest/run-tests (eftest/find-tests "test") {:multithread? false})))
 
 (defn refresh-and-test []
-  (refresh)
-  (test))
+  (do
+    (refresh)
+    (test)))
