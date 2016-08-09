@@ -1,14 +1,12 @@
 (ns translator.parsers.strings
-  (:require [instaparse.core :refer [parser]]))
+  (:require [instaparse.core :as insta]))
 
 
-(def strings-grammar
+(def grammar
   "<key-value> = string <'='> string
-   string = #'\"[^\"]*\"'")
+   <string> = #'\"[^\"]*\"'")
 
 (defn make-parser [g]
-  (parser g :auto-whitespace :standard))
+  (insta/parser g :auto-whitespace :standard))
 
-(def strings (make-parser strings-grammar))
-
-
+(def parser (make-parser grammar))
