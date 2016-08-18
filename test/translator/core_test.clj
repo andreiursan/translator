@@ -5,6 +5,6 @@
 
 (deftest transforming-translations
   (testing "reading strings files"
-    (is (= {:en {"helo" "Hello!"
+    (is (= {:en {"hello" "Hello!"
                  "click_button" "Click"}}
-           (translation->clojure :strings (io/reader "./test/translator/fixtures/translations/strings/en.strings"))))))
+           (translation->clojure :strings (io/file "./test/translator/fixtures/translations/strings/en.strings"))))))
