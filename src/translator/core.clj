@@ -3,7 +3,6 @@
             [clojure.java.io :as io]
             [clojure.string :refer [split]]))
 
-
 (defn translation->clojure
   "parses translation files"
   [translation-type file]
@@ -13,3 +12,8 @@
         parsed-lines (map strings/parser lines)]
     {locale (into {} (map vec parsed-lines))}))
 
+(defn translations->clojure
+  "parses translation files"
+  [translation-type files]
+  (let [only-files (filter #(not (.isDirectory %)) files)]
+    (into {} (map #(translation->clojure :strings %) only-files))))
