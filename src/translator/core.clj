@@ -7,8 +7,7 @@
 
 (defmethod translation->clojure :default
   [format file]
-  (throw (IllegalArgumentException
-           (str "I don't know the " format " format."))))
+  {:error (str "I don't know the " format " format. Known formats: :yml, :strings.")})
 
 (defmethod translation->clojure :strings
   [format file]
@@ -17,6 +16,13 @@
         lines (line-seq (io/reader file))
         parsed-lines (map strings/parser lines)]
     {locale (into {} (map vec parsed-lines))}))
+
+(defmethod translation->clojure :yml
+  [format file]
+  (let [file-name (.getName file)
+        locale (-> file-name (split #"\.") first keyword)
+        lines (line-seq (io/reader file))]
+    {locale {}}))
 
 (defn translations->clojure
   [format files]
