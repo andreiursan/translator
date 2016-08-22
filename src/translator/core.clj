@@ -1,16 +1,18 @@
 (ns translator.core
   (:require [translator.parsers.strings :as strings]
             [clojure.java.io :as io]
-            [clojure.string :refer [split]]))
+            [clojure.string :refer [split]]
+            [yaml.core :as yaml]))
 
-(defmulti translation->clojure (fn [format _] format))
+(defmulti translation->clojure
+  (fn [format _] format))
 
 (defmethod translation->clojure :default
-  [format file]
+  [format _]
   {:error (str "I don't know the " format " format. Known formats: :yml, :strings.")})
 
 (defmethod translation->clojure :strings
-  [format file]
+  [_ file]
   (let [file-name (.getName file)
         locale (-> file-name (split #"\.") first keyword)
         lines (line-seq (io/reader file))
@@ -18,11 +20,10 @@
     {locale (into {} (map vec parsed-lines))}))
 
 (defmethod translation->clojure :yml
-  [format file]
-  (let [file-name (.getName file)
-        locale (-> file-name (split #"\.") first keyword)
-        lines (line-seq (io/reader file))]
-    {locale {}}))
+  [_ file]
+  (let [file-content (slurp (io/reader file))
+        yaml-parse (yaml/parse-string file-content false)]
+    (into {} (for [[k v] yaml-parse] [(keyword k) v]))))
 
 (defn translations->clojure
   [format files]
