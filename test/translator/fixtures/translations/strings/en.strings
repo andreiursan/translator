@@ -1,2 +1,10 @@
-"hello" = "Hello!"
-"click_button" = "Click"
+/* This is a comment */
+
+"hello" = "Hello!";
+
+/* This is another comment */
+"click_button" = "Click";
+
+/* Title bar, prints the number of selected products (The translation should be short due to the limit of 100 characters for the title of the mobile app) */
+"bar_print_$_selected_products" = "You Selected %@ Products";
+

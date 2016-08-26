@@ -16,8 +16,9 @@
   (let [file-name (.getName file)
         locale (-> file-name (split #"\.") first keyword)
         lines (line-seq (io/reader file))
-        parsed-lines (map strings/parser lines)]
-    {locale (into {} (map vec parsed-lines))}))
+        parsed-lines (map strings/parser lines)
+        translation-map (into {} (map vec parsed-lines))]
+    {locale translation-map}))
 
 (defmethod translation->clojure :yml
   [_ file]
