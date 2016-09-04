@@ -16,7 +16,7 @@
   (let [file-name (.getName file)
         locale (-> file-name (split #"\.") first keyword)
         lines (line-seq (io/reader file))
-        parsed-lines (map strings/parser lines)
+        parsed-lines (filter seq (map strings/parser lines))
         translation-map (into {} (map vec parsed-lines))]
     {locale translation-map}))
 

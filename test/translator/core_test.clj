@@ -7,14 +7,17 @@
   (testing "strings files"
     (testing "transforming a file"
       (is (= {:en {"hello" "Hello!"
-                   "click_button" "Click"}}
+                   "click_button" "Click"
+                   "bar_print_$_selected_products" "You Selected %@ Products"}}
              (translation->clojure :strings (io/file "./test/translator/fixtures/translations/strings/en.strings")))))
 
     (testing "transforming all files in a directory"
       (is (= {:en {"hello" "Hello!"
-                   "click_button" "Click"}
+                   "click_button" "Click"
+                   "bar_print_$_selected_products" "You Selected %@ Products"}
               :de {"hello" "Hallo!"
-                   "click_button" "Klick"}}
+                   "click_button" "Klick"
+                   "bar_print_$_selected_products" "Ausgewählte Sie %@ Produkte"}}
              (translations->clojure :strings (file-seq (io/file "./test/translator/fixtures/translations/strings/")))))))
 
   (testing "yml files"
